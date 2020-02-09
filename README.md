@@ -1,6 +1,6 @@
 # RESTApiJerseyCde
 
-##Fonctionnel
+## Fonctionnel
 Gestion des commandes d'un client.
 Les ressources du domaine sont :
 * Client avec adresse de livraison
