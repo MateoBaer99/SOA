@@ -1,0 +1,4 @@
+# Configure HTTP Connector
+server:
+    port: 8090
+    context-path: /
