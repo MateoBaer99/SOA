@@ -7,6 +7,7 @@ Les ressources du domaine sont :
 * Commandes avec des lignes de commandes comprendant une quantité et un lien vers le produit
 * Produits qui contient la liste des produits du catalogue
 
+## Technique
 Projet Springboot pour montrer l'utilisation des annotations JAX-RS en code first 
 * implémentation Jersey
 * data binding XML et JSON
