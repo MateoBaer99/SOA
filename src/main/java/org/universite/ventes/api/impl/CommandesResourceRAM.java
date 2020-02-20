@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -64,7 +63,7 @@ public class CommandesResourceRAM implements CommandesResource{
         Produit prod5=new Produit().name("MarteauTR2").description("Marteau de charpentier").poids((float) 1.0).prix(45);
         produits.put(prod5.getId(), prod5);
         Produit prod6=new Produit().name("CrayonXX124").description("Crayon mine bois pro").poids((float) 0.05).prix(2.5);
-        produits.put(prod1.getId(), prod6);
+        produits.put(prod6.getId(), prod6);
         
        
         // Création d'1 commande de 3 produits                
@@ -88,8 +87,7 @@ public class CommandesResourceRAM implements CommandesResource{
     }
     
     public Response creerCommande(Commande commande) {
-        //on vérifie que les produits commandés existent bien*
-      
+        // On vérifie que les produits commandés existent bien
         try {
             if (commande.getLignes().size()== commande.getLignes().stream()
                                                                   .filter(lc -> produits.containsKey(lc.getProduit().getId()))
@@ -97,16 +95,16 @@ public class CommandesResourceRAM implements CommandesResource{
                 //On affecte le produit du catalogue
                 commande.getLignes().forEach( (LigneCommande lc) -> lc.setProduit(produits.get(lc.getProduit().getId())));
             } else {
-                throw new WebApplicationException("Produits commandés non valides : inconnus au catalogue",Response.Status.BAD_REQUEST);
+                throw new WebApplicationException(Response.status(Status.BAD_REQUEST)
+                                                      .entity("{\"Erreur\": \"Produits commandés non valides : inconnus au catalogue\"}")
+                                                      .type("application/json")
+                                                      .build());
             }
    
         } catch (NullPointerException ne) {
-            throw new WebApplicationException(Response.status(Status.BAD_REQUEST)
-                                                      .entity("{\"Erreur\": \"Infos commandes incorrectes\"}")
-                                                      .type("application/json")
-                                                      .build());
+            throw new WebApplicationException("Infos commandes incorrectes",Response.Status.BAD_REQUEST);
         }
-//        commandes.put(commande.getId(),commande);
+        commandes.put(commande.getId(),commande);
        // return Response.created(URI.create("/commandes/"+commande.getId())).build();
        return Response.ok(commande).build();  
 
