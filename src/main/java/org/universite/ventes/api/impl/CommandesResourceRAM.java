@@ -101,7 +101,8 @@ public class CommandesResourceRAM implements CommandesResource{
                                                       .build());
             }
    
-        } catch (NullPointerException ne) {
+        } catch (Exception ex) {
+            System.out.println("Erreurs dans la requête");
             throw new WebApplicationException("Infos commandes incorrectes",Response.Status.BAD_REQUEST);
         }
         commandes.put(commande.getId(),commande);
